@@ -15,7 +15,7 @@ class Personal():
                 pass
         raise ValueError('Invalid date format found')
 
-    def calculateage(self,deadline):
+    def calculateage(self,deadline,tflag):
         if isinstance(deadline, str):
             currentDate = dt.datetime.now()
             deadlineDate = self.try_parsing_date(deadline)
@@ -24,7 +24,13 @@ class Personal():
             yearsInt = int(years)
             months = (years - yearsInt) * 12
             monthsInt = int(months)
-            return '{0} years {1} months'.format(abs(yearsInt), abs(monthsInt))
+            days = (months - monthsInt) * (365.242 / 12)
+            daysInt = int(days)
+            if tflag == 'A':
+                return '{0} years {1} months'.format(abs(yearsInt), abs(monthsInt))
+            elif tflag == 'S':
+                return '{0} years {1} months {2} days'.format(abs(yearsInt), abs(monthsInt),abs(daysInt))
+
 
 
     def grade(self, totmark):
@@ -44,7 +50,7 @@ class Personal():
 
     def prs_personal(self):
         self.csv_obj['fullName'] = self.csv_obj['firstname'] + ' ' + self.csv_obj['lastname']
-        self.csv_obj['age'] = self.csv_obj['dob'].apply(lambda x: self.calculateage(x))
+        self.csv_obj['age'] = self.csv_obj['dob'].apply(lambda x: self.calculateage(x,'A'))
         self.csv_obj['fgender'] = self.csv_obj['gender'].apply(lambda x: 'Male' if (x == 'm') else ('Female' if (x == 'f') else ''))
         self.csv_obj['contact_number'] = self.csv_obj['contact_number'].astype(str)
         self.csv_obj['city'] = self.csv_obj['city'].apply(lambda x: x.capitalize())
