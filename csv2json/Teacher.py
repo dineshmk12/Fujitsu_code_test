@@ -4,7 +4,7 @@ from Personal import Personal
 class Teacher(Personal):
     def teacher_df(self):
         self.tea_df1 = self.csv_obj.loc[self.csv_obj['category'] == 'teacher'].copy()
-        self.tea_df1['serperiod'] = self.tea_df1['doj'].apply(lambda x: self.calculateage(x))
+        self.tea_df1['serperiod'] = self.tea_df1['doj'].apply(lambda x: self.calculateage(x,'S'))
         self.tea_df1['post'] = self.tea_df1['post'].apply(lambda x: x.capitalize())
         self.tea_df = self.tea_df1[
             ['id', 'fullName', 'fgender', 'dob', 'age', 'aadhar_number', 'city', 'contact_number', 'emp_no',
